@@ -10,6 +10,30 @@ import android.view.MotionEvent
 import android.view.View
 
 class ChoiceView : View {
+    class DragTrack {
+        var lastX: Float = 0f
+        var lastY: Float = 0f
+        var centerX: Float = 0f
+        var centerY: Float = 0f
+        var dragging: Boolean = false
+
+        fun start(x: Float, y: Float) {
+            dragging = true
+            lastX = x
+            lastY = y
+        }
+
+        fun moveTo(x: Float, y: Float) {
+            centerX += x - lastX
+            centerY += y - lastY
+            lastX = x
+            lastY = y
+        }
+
+        fun end() {
+            dragging = false
+        }
+    }
 
     private val circlePaint: Paint = Paint()
 
