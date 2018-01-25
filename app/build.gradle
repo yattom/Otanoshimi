@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: "jacoco"
 
 android {
     compileSdkVersion 25
@@ -20,6 +22,15 @@ android {
     }
 }
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.0.30"
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -28,9 +39,21 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
-    testCompile 'junit:junit:4.12'
+//    testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // use android-junit5 https://github.com/mannodermaus/android-junit5
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // (Required) Writing and executing Unit Tests on the JUnit Platform.
+//    testImplementation junit5.unitTests()
+    testCompile junit5.unitTests()
+
+    // (Optional) If you need "Parameterized Tests".
+//    testImplementation junit5.parameterized()
+    testCompile junit5.parameterized()
 }
+
 repositories {
     mavenCentral()
 }
