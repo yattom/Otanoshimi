@@ -1,7 +1,12 @@
 package jp.yattom.otanosimi
 
+import android.graphics.Rect
+import android.graphics.RectF
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.mockito.Mockito
+import org.mockito.Mockito.*
 
 class ChoiceViewTest {
     class DragTrackTest {
@@ -57,6 +62,31 @@ class ChoiceViewTest {
             assertFalse(sut.dragging)
             assertEquals(10f + 15f, sut.centerX)
             assertEquals(20f + 25f, sut.centerY)
+        }
+    }
+
+    class CircleGroupTest {
+        var viewPort: RectF = RectF(0f, 0f, 0f, 0f)  // dummy initialization
+
+        @BeforeEach
+        fun setUp() {
+            val v = mock(RectF::class.java)
+            Mockito.`when`(v.width()).thenReturn(500f)
+            Mockito.`when`(v.height()).thenReturn(500f)
+            viewPort = v
+        }
+
+        @Test
+        fun three_choices() {
+            val sut = ChoiceView.CirclrGroup(viewPort, 3)
+            sut.setViewPortCenter(0f, 0f)
+            assertEquals(3, sut.circles.size)
+            assertTrue(sut.circles[0].x == 0f, "first circle is at the top")
+            assertTrue(sut.circles[0].y < -250f, "first circle is at the top")
+            assertTrue(sut.circles[1].x > 250, "second circle is at the bottom right")
+            assertTrue(sut.circles[1].y > 0, "second circle is at the bottom right")
+            assertTrue(sut.circles[2].x < -250f, "second circle is at the bottom left")
+            assertTrue(sut.circles[2].y > 0, "second circle is at the bottom left")
         }
     }
 }

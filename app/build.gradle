@@ -49,6 +49,8 @@ dependencies {
 //    testImplementation junit5.unitTests()
     testCompile junit5.unitTests()
 
+    testCompile('org.mockito:mockito-core:2.+')
+
     // (Optional) If you need "Parameterized Tests".
 //    testImplementation junit5.parameterized()
     testCompile junit5.parameterized()
