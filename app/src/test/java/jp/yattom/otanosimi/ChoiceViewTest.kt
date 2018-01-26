@@ -1,12 +1,11 @@
 package jp.yattom.otanosimi
 
-import android.graphics.Rect
 import android.graphics.RectF
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
 
 class ChoiceViewTest {
     class DragTrackTest {
