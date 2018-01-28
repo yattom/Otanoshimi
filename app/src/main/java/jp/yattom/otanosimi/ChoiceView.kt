@@ -37,10 +37,12 @@ class ChoiceView : View {
     }
 
     private val circlePaint: Paint = Paint()
+    private val circleGroup: CirclrGroup
 
     init {
         circlePaint.color = Color.MAGENTA
         circlePaint.strokeWidth = 5.0f
+        circleGroup = CirclrGroup(RectF(0f, 0f, 500f, 500f), 3)
     }
 
     @Suppress("unused")
@@ -91,8 +93,8 @@ class ChoiceView : View {
 //                Log.d("ChoiceView", "ACTION_MOVE")
                 val deltaX = event.x - lastX
                 val deltaY = event.y - lastY
-                centerX += deltaX
-                centerY += deltaY
+                centerX -= deltaX
+                centerY -= deltaY
                 lastX = event.x
                 lastY = event.y
             }
@@ -102,13 +104,18 @@ class ChoiceView : View {
                 return super.onTouchEvent(event)
             }
         }
+        circleGroup.setViewPortCenter(centerX, centerY)
         invalidate()
         return true
     }
 
 
     fun drawCircles(canvas: Canvas) {
-        canvas.drawArc(RectF(0f + centerX, 0f + centerY, 200f + centerX, 200f + centerY), 0f, 360f, true, circlePaint)
+        for(c in circleGroup.circles) {
+            val x = c.x
+            val y = c.y
+            canvas.drawArc(x - 100f, y - 100f, x + 100f, y + 100f, 0f, 360f, true, circlePaint)
+        }
     }
 
     class CirclrGroup(val viewPort: RectF, numberOfCircles: Int) {
@@ -123,11 +130,11 @@ class ChoiceView : View {
 
             val x: Float
                 get() {
-                    return centerX
+                    return centerX - viewPortCenterX
                 }
             val y: Float
                 get() {
-                    return centerY
+                    return centerY - viewPortCenterY
                 }
         }
 

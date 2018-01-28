@@ -3,6 +3,7 @@ package jp.yattom.otanosimi
 import android.graphics.RectF
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
@@ -75,17 +76,42 @@ class ChoiceViewTest {
             viewPort = v
         }
 
-        @Test
-        fun three_choices() {
-            val sut = ChoiceView.CirclrGroup(viewPort, 3)
-            sut.setViewPortCenter(0f, 0f)
-            assertEquals(3, sut.circles.size)
-            assertTrue(sut.circles[0].x == 0f, "first circle is at the top")
-            assertTrue(sut.circles[0].y < -250f, "first circle is at the top")
-            assertTrue(sut.circles[1].x > 250, "second circle is at the bottom right")
-            assertTrue(sut.circles[1].y > 0, "second circle is at the bottom right")
-            assertTrue(sut.circles[2].x < -250f, "second circle is at the bottom left")
-            assertTrue(sut.circles[2].y > 0, "second circle is at the bottom left")
+        @Nested
+        inner class ThreeChoices {
+            @Test
+            fun initial_placement() {
+                val sut = ChoiceView.CirclrGroup(viewPort, 3)
+                sut.setViewPortCenter(0f, 0f)
+                assertEquals(3, sut.circles.size)
+                assertTrue(sut.circles[0].x == 0f, "first circle is at the top")
+                assertTrue(sut.circles[0].y < -250f, "first circle is at the top")
+                assertTrue(sut.circles[1].x > 250, "second circle is at the bottom right")
+                assertTrue(sut.circles[1].y > 0, "second circle is at the bottom right")
+                assertTrue(sut.circles[2].x < -250f, "second circle is at the bottom left")
+                assertTrue(sut.circles[2].y > 0, "second circle is at the bottom left")
+            }
+
+            @Test
+            fun shift_viewport_vertically() {
+                val sut = ChoiceView.CirclrGroup(viewPort, 3)
+                sut.setViewPortCenter(0f, 0f)
+                val lastY = sut.circles[0].y
+                sut.setViewPortCenter(0f, -50f)  // move up
+                assertTrue(lastY < sut.circles[0].y, "circle comes down (seen in viewport)")
+                sut.setViewPortCenter(0f, 50f)  // move down
+                assertTrue(lastY > sut.circles[0].y, "circle goes up (seen in viewport)")
+            }
+
+            @Test
+            fun shift_viewport_horizontally() {
+                val sut = ChoiceView.CirclrGroup(viewPort, 3)
+                sut.setViewPortCenter(0f, 0f)
+                val lastX = sut.circles[0].x
+                sut.setViewPortCenter(-50f, 0f)  // move left
+                assertTrue(lastX < sut.circles[0].x, "circle goes right (seen in viewport)")
+                sut.setViewPortCenter(50f, 0f)  // move right
+                assertTrue(lastX > sut.circles[0].x, "circle goes left (seen in viewport)")
+            }
         }
     }
 }
