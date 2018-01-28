@@ -79,24 +79,18 @@ class ChoiceView : View {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event!!
-//        Log.d("ChoiceView", "onDragEvent(action=" + event.action + ")")
         when (event.action) {
             MotionEvent.ACTION_UP -> {
-//                Log.d("ChoiceView", "ACTION_UP")
                 dragTrack.end()
             }
             MotionEvent.ACTION_DOWN -> {
-//                Log.d("ChoiceView", "ACTION_DOWN")
                 dragging = true
                 dragTrack.start(event.x, event.y)
             }
             MotionEvent.ACTION_MOVE -> {
-//                Log.d("ChoiceView", "ACTION_MOVE")
                 dragTrack.moveTo(event.x, event.y)
             }
-//            MotionEvent.ACTION_OUTSIDE -> Log.d("ChoiceView", "ACTION_OUTSIDE")
             else -> {
-//                Log.d("ChoiceView", "?")
                 return super.onTouchEvent(event)
             }
         }
@@ -107,7 +101,7 @@ class ChoiceView : View {
 
 
     fun drawCircles(canvas: Canvas) {
-        for(c in circleGroup.circles) {
+        for (c in circleGroup.circles) {
             val x = c.x
             val y = c.y
             canvas.drawArc(x - 100f, y - 100f, x + 100f, y + 100f, 0f, 360f, true, circlePaint)
