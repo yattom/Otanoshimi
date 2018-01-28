@@ -37,12 +37,14 @@ class ChoiceView : View {
     }
 
     private val circlePaint: Paint = Paint()
+    private val dragTrack: DragTrack
     private val circleGroup: CirclrGroup
 
     init {
         circlePaint.color = Color.MAGENTA
         circlePaint.strokeWidth = 5.0f
         circleGroup = CirclrGroup(RectF(0f, 0f, 500f, 500f), 3)
+        dragTrack = DragTrack()
     }
 
     @Suppress("unused")
@@ -81,22 +83,16 @@ class ChoiceView : View {
         when (event.action) {
             MotionEvent.ACTION_UP -> {
 //                Log.d("ChoiceView", "ACTION_UP")
-                dragging = false
+                dragTrack.end()
             }
             MotionEvent.ACTION_DOWN -> {
 //                Log.d("ChoiceView", "ACTION_DOWN")
                 dragging = true
-                lastX = event.x
-                lastY = event.y
+                dragTrack.start(event.x, event.y)
             }
             MotionEvent.ACTION_MOVE -> {
 //                Log.d("ChoiceView", "ACTION_MOVE")
-                val deltaX = event.x - lastX
-                val deltaY = event.y - lastY
-                centerX -= deltaX
-                centerY -= deltaY
-                lastX = event.x
-                lastY = event.y
+                dragTrack.moveTo(event.x, event.y)
             }
 //            MotionEvent.ACTION_OUTSIDE -> Log.d("ChoiceView", "ACTION_OUTSIDE")
             else -> {
@@ -104,7 +100,7 @@ class ChoiceView : View {
                 return super.onTouchEvent(event)
             }
         }
-        circleGroup.setViewPortCenter(centerX, centerY)
+        circleGroup.setViewPortCenter(-dragTrack.centerX, -dragTrack.centerY)
         invalidate()
         return true
     }
