@@ -45,6 +45,7 @@ class ChoiceView : View {
         circlePaint.strokeWidth = 5.0f
         circleGroup = CirclrGroup(RectF(0f, 0f, 500f, 500f), 3)
         dragTrack = DragTrack()
+        dragTrack.moveTo(250f, 250f)
     }
 
     @Suppress("unused")
@@ -67,6 +68,7 @@ class ChoiceView : View {
         paint.textSize = 100f
         canvas.drawText("ChoiceView here", 0.0f, 100.0f, paint)
 
+        circleGroup.setViewPortCenter(-dragTrack.centerX, -dragTrack.centerY)
         drawCircles(canvas)
     }
 
@@ -94,7 +96,6 @@ class ChoiceView : View {
                 return super.onTouchEvent(event)
             }
         }
-        circleGroup.setViewPortCenter(-dragTrack.centerX, -dragTrack.centerY)
         invalidate()
         return true
     }
@@ -139,6 +140,8 @@ class ChoiceView : View {
                 val c = Circle(r, 360.0 / numberOfCircles * i)
                 circles.add(c)
             }
+
+            setViewPortCenter((viewPort.left + viewPort.right) / 2, (viewPort.top + viewPort.bottom) / 2)
         }
 
         fun setViewPortCenter(x: Float, y: Float) {
