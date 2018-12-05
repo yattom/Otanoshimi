@@ -5,7 +5,6 @@ apply plugin: "jacoco"
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "jp.yattom.otanosimi"
         minSdkVersion 22
@@ -32,28 +31,28 @@ buildscript {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:25.3.1'
-//    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:design:25.3.1'
+//    testImplementation 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // use android-junit5 https://github.com/mannodermaus/android-junit5
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     // (Required) Writing and executing Unit Tests on the JUnit Platform.
 //    testImplementation junit5.unitTests()
-    testCompile junit5.unitTests()
+    testImplementation junit5.unitTests()
 
-    testCompile('org.mockito:mockito-core:2.+')
+    testImplementation('org.mockito:mockito-core:2.+')
 
     // (Optional) If you need "Parameterized Tests".
 //    testImplementation junit5.parameterized()
-    testCompile junit5.parameterized()
+    testImplementation junit5.parameterized()
 }
 
 repositories {
