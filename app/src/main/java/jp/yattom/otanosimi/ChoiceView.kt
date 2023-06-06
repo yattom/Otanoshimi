@@ -1,3 +1,4 @@
+// hoe
 package jp.yattom.otanosimi
 
 import android.content.Context
